@@ -2,7 +2,7 @@ class SitesController < ApplicationController
   # before_action :user_required
 
   def index
-    @sites = Site.order(created_at: :desc).page params[:page]
+    @sites = Site.order(created_at: :desc).paginate(page: params[:page], per_page: 2)
     @site  = Site.new
   end
 

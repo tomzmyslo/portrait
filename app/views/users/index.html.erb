@@ -1,7 +1,6 @@
-<h2>Users</h2>
-<hr>
+<h2>Manage Users</h2>
 
-<table class="table table-sm table-bordered table-hover">
+<table class="table table-sm table-bordered">
   <thead class="thead-light text-center">
     <tr>
       <th class="text-left">Name</th>
@@ -14,7 +13,7 @@
   <tbody>
     <% @users.each do |user| %>
       <tr class="text-center">
-        <td class="text-left"><%= link_to user.last_name_first, user %></td>
+        <td class="text-left"><%= link_to user.name, user %></td>
         <td><%= user.email %></td>
         <td><%= number_with_delimiter user.sites.count %></td>
         <td><%= user.admin ? '&#10004;'.html_safe : '' %></td>
@@ -23,3 +22,8 @@
     <% end %>
   </tbody>
 </table>
+
+<div class="text-center">
+  <%= will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center) %>
+  <%= page_entries_info @users %>
+</div>

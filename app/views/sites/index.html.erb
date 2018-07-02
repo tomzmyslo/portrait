@@ -1,12 +1,23 @@
-<%= form_with model: @site do |f| %>
-  <%= f.text_field :url %>
-  <%= f.submit 'Capture URL' %>
-<% end %>
+<div class="row justify-content-center">
+  <div class="col-6">
+    <%= form_with model: @site do |f| %>
+      <div class="input-group">
+        <%= f.text_field :url, class: "form-control" %>
+        <div class="input-group-append">
+          <%= f.submit 'Capture URL', class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<hr>
 
-<table>
-  <thead>
+<h2>Captured Sites</h2>
+
+<table class="table table-sm table-bordered">
+  <thead class="thead-light text-center">
     <tr>
-      <th>User</th>
+      <th class="text-left">User</th>
       <th>URL</th>
       <th>Status</th>
       <th>Added</th>
@@ -15,9 +26,9 @@
   </thead>
   <tbody>
     <% @sites.each do |site| %>
-      <tr>
-        <td><%= link_to site.user.name, users_path %></td>
-        <td><%= link_to site.url, site.url %></td>
+      <tr class="text-center">
+        <td class="text-left"><%= link_to site.user.name, users_path %></td>
+        <td><%= link_to site.url, site.url, target: "blank" %></td>
         <td><%= site.status.capitalize %></td>
         <td><%= site.created_at.strftime('%B %e, %Y %I:%m %p') %></td>
         <td><%= link_to(site.image.filename, url_for(site.image)) if site.image.attached? %></td>
@@ -26,4 +37,7 @@
   </tbody>
 </table>
 
-<%= will_paginate @sites %>
+<div class="text-center">
+  <%= will_paginate @sites, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center) %>
+  <%= page_entries_info @sites %>
+</div>

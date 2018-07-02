@@ -12,6 +12,7 @@ gem 'will_paginate', '3.1.6'
 gem 'bcrypt', '~> 3.1.7'
 gem 'friendly_id'
 gem 'bootstrap'
+gem 'will_paginate-bootstrap4'
 gem 'jquery-rails'
 
 group :development, :test do

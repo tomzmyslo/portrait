@@ -1,1 +1,6 @@
-<p><%= @user.name %></p>
+<h3><%= "#{@user.first_name}'s Sites" %></h3>
+<hr>
+
+<% @user.sites.each do |site| %>
+  <p><%= image_tag site.image, size: '200' %></p>
+<% end %>
