@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Sites</th>
+      <th>Admin</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.last_name_first, user %></td>
+        <td><%= user.email %></td>
+        <td><%= number_with_delimiter user.sites.count %></td>
+        <td><%= user.admin ? '&#10004;'.html_safe : '' %></td>
+        <td><%= link_to "edit", edit_user_path(user) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

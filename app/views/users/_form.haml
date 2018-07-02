@@ -1,6 +1,15 @@
-%dl
-  %dt Name
-  %dd= form.text_field :name
+= form_with model: @user do |f|
+  - if @user.errors.any?
+    #ErrorModule
+      %h2= "#{pluralize @user.errors.count, 'Error'} Prevented This User From Being Created"
+      %ol
+        - @user.errors.full_messages.each do |error|
+          %li= error
+  %dl
+    %dt Name
+    %dd= form.text_field :name
 
-  %dt Password
-  %dd= form.text_field :password
+    %dt Password
+    %dd= form.text_field :password
+    
+  %p= f.submit 'Create User'

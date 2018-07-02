@@ -1,0 +1,28 @@
+<div id="Main">
+  <p>
+    Portrait is a web service for capturing a webpage as an image.
+    This particular instance is password protected, but you can download your own copy.
+  </p>
+
+  <p>
+    Current Users: <%= current_user.email %>
+  </p>
+
+  <ul>
+    <li>
+      <%= link_to 'Portrait on GitHub', 'http://github.com/jmckible/portrait' %>
+    </li>
+    <% if current_user %>
+      <li>
+        <%= link_to 'Captured Sites', sites_path %>
+      </li>
+      <li>
+        <%= link_to 'Manage Users', users_path %>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to 'Register', register_path %>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,0 +1,47 @@
+<%= form_with model: @user do |f| %>
+  <% if @user.errors.any? %>
+    <div id="ErrorModule">
+      <h2><%= pluralize @user.errors.count, 'Error' %> Prevented This User From Being Created</h2>
+      <ol>
+        <% @users.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ol>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :first_name, "First Name" %><br>
+    <%= f.text_field :first_name %>
+  </div>
+
+  <div>
+    <%= f.label :last_name, "Last Name" %><br>
+    <%= f.text_field :last_name %>
+  </div>
+
+  <div>
+    <%= f.label :username %><br>
+    <%= f.text_field :username %>
+  </div>
+
+  <div>
+    <%= f.label :email %><br>
+    <%= f.email_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :password_confirmation, "Password Confirmation" %><br>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <div>
+    <label>
+      <%= f.check_box :admin %> Admin
+    </label>
+  </div>
+
+  <br>
+  <div><%= f.submit %></div>
+
+<% end %>
