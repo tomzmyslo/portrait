@@ -11,6 +11,8 @@ gem 'webpacker', '3.2.2'
 gem 'will_paginate', '3.1.6'
 gem 'bcrypt', '~> 3.1.7'
 gem 'friendly_id'
+gem 'bootstrap'
+gem 'jquery-rails'
 
 group :development, :test do
   gem 'byebug', '10.0.0'
