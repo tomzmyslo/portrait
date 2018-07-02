@@ -1,9 +1,12 @@
-class UsersController < ApplicationController
+class Admin::UsersController < ApplicationController
   # before_action :user_required
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
+  def index
+    @users = User.by_last_name.paginate(page: params[:page], per_page: 20)
+  end
+
   def show
-    @sites = current_user.sites.order(created_at: :desc)
   end
 
   def new
@@ -32,9 +35,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    @user = User.find_by! name: params[:id]
     @user.destroy
-    session[:user_id] = nil
-    redirect_to root_url
+    redirect_to users_url
   end
 
   private

@@ -2,7 +2,7 @@
 
   <div class="row justify-content-center">
     <div class="col-6 mt-2 mb-4">
-      <%= form_with model: @site do |f| %>
+      <%= form_with model: @site, local: true do |f| %>
         <div class="input-group">
           <%= f.text_field :url, class: "form-control", placeholder: "enter a URL to capture" %>
           <div class="input-group-append">

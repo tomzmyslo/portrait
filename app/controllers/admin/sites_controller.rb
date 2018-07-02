@@ -1,4 +1,4 @@
-class SitesController < ApplicationController
+class Admin::SitesController < ApplicationController
   # before_action :user_required
 
   def index
@@ -9,7 +9,7 @@ class SitesController < ApplicationController
     @site = current_user.sites.build params.fetch(:site, {}).permit(:url)
     @site.save
     respond_to do |format|
-      format.html { redirect_to this_user_path }
+      format.html { redirect_to sites_url }
       format.json
     end
   end

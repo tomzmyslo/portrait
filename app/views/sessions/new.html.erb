@@ -3,7 +3,7 @@
     <h2>Login</h2>
     <hr>
 
-    <%= form_with url: sessions_path do |f| %>
+    <%= form_with url: sessions_path, local: true do |f| %>
 
       <div class="form-group">
         <%= f.label :email %><br>
