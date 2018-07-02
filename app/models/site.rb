@@ -37,4 +37,6 @@ class Site < ApplicationRecord
   validates :user_id, presence: true
   validates :url, format: /\A((http|https):\/\/)*[a-z0-9_-]{1,}\.*[a-z0-9_-]{1,}\.[a-z]{2,5}(\/)?\S*\z/i
 
+  scope :last_five, -> {order(created_at: :desc).limit(5)}
+
 end
