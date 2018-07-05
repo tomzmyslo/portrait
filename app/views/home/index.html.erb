@@ -31,7 +31,7 @@
       <h2>Your Recent Portraits</h2>
 
       <ul class="list-group list-group-flush">
-        <% current_user.sites.last_five.each do |site| %>
+        <% current_user.sites.last_five.succeeded.each do |site| %>
           <li class="list-group-item">
             <%= link_to site.url, site_path(site) %>
             <span class="float-right"><%= site.created_at.strftime('%B %e, %Y %I:%m %p') %></span>

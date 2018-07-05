@@ -8,17 +8,17 @@ class SitesController < ApplicationController
   def create
     @site = current_user.sites.new(site_params)
     if @site.save
-      redirect_to current_user_path(current_user)
+      if @site.status == 'failed'
+        redirect_to current_user_path(current_user), alert: "#{@site.url} failed to capture. Check the format of the URL."
+      else
+        redirect_to current_user_path(current_user)
+      end
     else
       redirect_to current_user_path(current_user), alert: "#{@site.errors.full_messages[0]}."
     end
   end
 
   private
-
-  def set_site
-    # @site = current_user.sites.build params.fetch(:site, {}).permit(:url)
-  end
 
   def site_params
     params.require(:site).permit(:url, :user_id)
