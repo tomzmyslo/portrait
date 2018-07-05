@@ -8,11 +8,7 @@ class SitesController < ApplicationController
   def create
     @site = current_user.sites.new(site_params)
     if @site.save
-      if @site.status == 3
-        redirect_to current_user_path(current_user), "Portrait failed to capture #{@site.url}."
-      else
-        redirect_to current_user_path(current_user)
-      end
+      redirect_to current_user_path(current_user)
     else
       redirect_to current_user_path(current_user), alert: "#{@site.errors.full_messages[0]}."
     end
