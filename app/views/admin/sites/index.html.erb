@@ -13,7 +13,7 @@
   <tbody>
     <% @sites.each do |site| %>
       <tr class="text-center">
-        <td class="text-left"><%= link_to site.user.name, users_path %></td>
+        <td class="text-left"><%= link_to site.user.name, admin_user_path(site.user) %></td>
         <td><%= link_to site.url, site.url, target: "blank" %></td>
         <td><%= site.status.capitalize %></td>
         <td><%= site.created_at.strftime('%B %e, %Y %I:%m %p') %></td>

@@ -19,8 +19,8 @@
         <ul class="navbar-nav mr-auto">
           <% if current_user %>
             <li class="nav-item">
-              <%= link_to_unless_current "My Portraits", this_user_path(current_user), class: "nav-link" do %>
-                <%= link_to "My Portraits", this_user_path(current_user), class: "nav-link active" %>
+              <%= link_to_unless_current "My Portraits", current_user_path(current_user), class: "nav-link" do %>
+                <%= link_to "My Portraits", current_user_path(current_user), class: "nav-link active" %>
               <% end %>
             </li>
             <% if current_user.admin %>

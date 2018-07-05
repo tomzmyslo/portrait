@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
-  # before_action :user_required
+  before_action :is_logged_in, only: [:new, :create]
+  before_action :authorize, except: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def show
-    @sites = current_user.sites.order(created_at: :desc)
+    @sites = current_user.sites.succeeded.order(created_at: :desc)
+    @site = Site.new
   end
 
   def new
@@ -40,7 +42,7 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.friendly.find(params[:id])
+    @user = current_user
   end
 
   def user_params
