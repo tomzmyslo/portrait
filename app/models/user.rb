@@ -18,8 +18,4 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def last_name_first
-    "#{last_name}, #{first_name}"
-  end
-
 end

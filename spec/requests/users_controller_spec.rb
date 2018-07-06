@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe UsersController, 'user' do
   let(:current_user) { users(:marty) }
+  let(:google) { sites(:google) }
 
   it 'handles /register with GET' do
     get "/register"
@@ -58,5 +59,4 @@ describe UsersController, 'admin' do
     expect(regular_user.reload.first_name).to eq('Martin')
     expect(response).to redirect_to(admin_user_path(regular_user))
   end
-
 end

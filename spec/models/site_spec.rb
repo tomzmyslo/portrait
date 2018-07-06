@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Site do
   it 'should belong to a user' do
-    expect(sites(:google).user).to eq(users(:doc))
+    expect(sites(:google).user).to eq(users(:marty))
   end
 
   it 'should require a url' do

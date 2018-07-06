@@ -36,7 +36,7 @@
           <p class="text-muted">
             <i>Taken <%= site.created_at.strftime('%B %e, %Y at %I:%m %p') %></i>
           </p>
-          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#portrait-modal" data-image="<%= url_for(site.image) %>" data-url="<%= site.url %>">View Portrait</button>
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#portrait-modal" data-image="<%= url_for(site.image) if site.image.attached? %>" data-url="<%= site.url %>">View Portrait</button>
         </div>
       </div>
     </div>

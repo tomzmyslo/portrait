@@ -1,5 +1,4 @@
 doc:
-  id: 1
   first_name: Doc
   last_name: Brown
   password_digest: password
@@ -8,7 +7,6 @@ doc:
   admin: true
 
 marty:
-  id: 2
   first_name: Marty
   last_name: McFly
   password_digest: password
