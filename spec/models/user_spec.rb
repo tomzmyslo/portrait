@@ -1,22 +1,28 @@
 require 'rails_helper'
 
 describe User, 'authentication' do
-  it 'should authenticate a valid user' do
-    user = User.new email: 'doc.brown@example.com', password: 'password'
+  it 'should authenticate a valid admin user' do
+    user = User.new email: 'doc.brown@example.com', password: 'password', admin: true
     logged_in_user = user.authenticate('password')
-    expect(logged_in_user.email).to eq(users(:admin).email)
+    expect(logged_in_user.admin).to be true
   end
 
-  it 'should not authenticate valid user with wrong password' do
+  it 'should not authenticate valid admin user with wrong password' do
     user = User.new email: 'doc.brown@example.com', password: 'password'
     logged_in_user = user.authenticate('wrong')
     expect(logged_in_user).to be false
   end
 
-  it 'should not authenticate valid email with nil password' do
+  it 'should not authenticate valid admin email with nil password' do
     user = User.new email: 'doc.brown@example.com', password: 'password'
     logged_in_user = user.authenticate('')
     expect(logged_in_user).to be false
+  end
+
+  it 'should authenticate a valid user' do
+    user = User.new email: 'marty.mcfly@example.com', password: 'password'
+    logged_in_user = user.authenticate('password')
+    expect(logged_in_user.admin).to be false
   end
 end
 
@@ -52,7 +58,7 @@ describe User, 'validations' do
   end
 
   it 'should have a unique username' do
-    user = User.new username: users(:admin).username
+    user = User.new username: users(:doc).username
     user.valid?
     expect(user.errors[:username]).not_to be_empty
   end

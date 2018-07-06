@@ -1,45 +1,62 @@
 require 'rails_helper'
 
-describe UsersController do
-  before{ login_as :admin }
+describe UsersController, 'user' do
+  let(:current_user) { users(:marty) }
 
-  it 'handles /users with GET' do
-    gt :users
+  it 'handles /register with GET' do
+    get "/register"
     expect(response).to be_successful
   end
 
-  # it 'handles /users/:id with GET' do
-  #   gt users(:admin)
-  #   expect(response).to be_successful
-  # end
+  it 'handles /mcfly with GET' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user)
+    get "/#{current_user.username}"
+    expect(path).to render_template(:show)
+  end
 
-  # it 'handles /users with valid params and POST' do
-  #   expect {
-  #     pst :users, user: { name: 'name', password: 'password' }
-  #     expect(response).to redirect_to(users_path)
-  #   }.to change(User, :count).by(1)
-  # end
+  it 'handles /users/:id/edit with GET' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user)
+    get "/users/#{current_user.username}/edit"
+    expect(response).to render_template(:edit)
+  end
 
-  # it 'handles /users/:id with valid params and PUT' do
-  #   user = users(:admin)
-  #   ptch user, user: { name: 'new' }
-  #   expect(user.reload.name).to eq('new')
-  #   expect(response).to redirect_to(user_path(user))
-  # end
+  it 'handles /users/:id with valid params and PATCH' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user)
+    patch "/users/#{current_user.username}", params: { user: { id: current_user.id, first_name: 'Martin'} }
+    expect(current_user.reload.first_name).to eq('Martin')
+    expect(response).to redirect_to(current_user_path(current_user))
+  end
+end
 
-  # it 'handles /users/:id with invalid params and PUT' do
-  #   user = users(:admin)
-  #   ptch user, user: { password: '' }
-  #   expect(user.reload.name).not_to be_blank
-  #   expect(response).to be_successful
-  #   expect(response).to render_template(:show)
-  # end
+describe UsersController, 'admin' do
+  let(:current_user) { users(:doc) }
+  let(:regular_user) { users(:marty) }
 
-  # it 'handles /users/:id with DELETE' do
-  #   expect {
-  #     del users(:admin)
-  #     expect(response).to redirect_to(users_path)
-  #   }.to change(User, :count).by(-1)
-  # end
+  it 'handles /admin/users with GET' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user)
+    get "/admin/users"
+    expect(User.all.count).to eq(2)
+    expect(path).to render_template(:index)
+  end
+
+  it 'handles /admin/users/:id with GET' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user)
+    get "/admin/users/#{regular_user.username}"
+    expect(regular_user.username).to eq('mcfly')
+    expect(path).to render_template(:show)
+  end
+
+  it 'handles /admin/users/:id/edit with GET' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user)
+    get "/admin/users/#{regular_user.username}/edit"
+    expect(response).to render_template(:edit)
+  end
+
+  it 'handles /admin/users/:id with valid params and PATCH' do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user)
+    patch "/admin/users/#{regular_user.username}", params: { user: { id: regular_user.id, first_name: 'Martin'}}
+    expect(regular_user.reload.first_name).to eq('Martin')
+    expect(response).to redirect_to(admin_user_path(regular_user))
+  end
 
 end

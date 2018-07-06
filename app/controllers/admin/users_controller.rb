@@ -13,10 +13,10 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(user_params)
-      redirect_to admin_users_path(@user)
+    if @user.update(user_params)
+      redirect_to admin_user_path(@user)
     else
-      render :edit
+      render [:admin, @user]
     end
   end
 

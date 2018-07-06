@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def show
-    @sites = current_user.sites.succeeded.order(created_at: :desc)
+    @sites = @user.sites.succeeded.order(created_at: :desc)
     @site = Site.new
   end
 
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      redirect_to @user
+      redirect_to current_user_path(@user)
     else
       render :edit
     end
