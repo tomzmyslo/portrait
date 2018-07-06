@@ -1,0 +1,11 @@
+$primary: #3c3;
+
+@import "bootstrap";
+
+body {
+  margin-top: 70px;
+}
+
+.field_with_errors {
+  display: inline;
+}

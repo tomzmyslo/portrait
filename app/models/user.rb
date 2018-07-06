@@ -1,15 +1,21 @@
 class User < ApplicationRecord
 
-  def self.authenticate(name, password)
-    User.find_by name: name, password: password
-  end
+  has_secure_password
+
+  extend FriendlyId
+  friendly_id :username
 
   has_many :sites, dependent: :destroy
 
-  scope :by_name, ->{ order(name: :asc) }
+  scope :by_last_name, -> { order(last_name: :asc) }
 
-  def to_param() name end
+  validates :first_name, :last_name, :email, :username, presence: true
+  validates :username, format: { without: /[@]/, message: "can't be an email address" }
+  validates :email, format: { with: /\A[\w!#$%&'*+\/=?`{|}~^-]+(?:\.[\w!#$%&'*+\/=?`{|}~^-]+)*@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}\z/i, message: "is not a valid address" }
+  validates :email, :username, uniqueness: true
 
-  validates :password, presence: true
-  validates :name, uniqueness: true, format: /[a-z0-9]+/
+  def name
+    "#{first_name} #{last_name}"
+  end
+
 end

@@ -1,0 +1,34 @@
+<h3><%= "#{@user.name}'s Sites" %></h3>
+<hr>
+
+<div class="row">
+  <% @user.sites.order(created_at: :desc).each do |site| %>
+    <div class="col-sm-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= site.url %></h5>
+          <p class="text-muted">
+            <i>Taken <%= site.created_at.strftime('%B %e, %Y at %I:%m %p') %></i>
+          </p>
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#portrait-modal" data-image="<%= url_for(site.image) if site.image.attached? %>" data-url="<%= site.url %>">View Portrait</button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="modal fade" id="portrait-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="modal-image img-fluid" src="">
+      </div>
+    </div>
+  </div>
+</div>

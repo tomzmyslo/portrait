@@ -1,3 +1,15 @@
-admin:
-  name: admin
-  password: password
+doc:
+  first_name: Doc
+  last_name: Brown
+  password_digest: password
+  username: docbrown
+  email: doc.brown@example.com
+  admin: true
+
+marty:
+  first_name: Marty
+  last_name: McFly
+  password_digest: password
+  username: mcfly
+  email: marty.mcfly@example.com
+  admin: false

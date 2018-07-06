@@ -1,4 +1,9 @@
 google:
-  user: admin
+  user: marty
   status: <%= Site.statuses[:succeeded] %>
   url: http://google.com
+
+apple:
+  user: marty
+  status: <%= Site.statuses[:succeeded] %>
+  url: http://www.apple.com

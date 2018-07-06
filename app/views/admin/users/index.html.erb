@@ -1,0 +1,29 @@
+<h2>Manage Users</h2>
+
+<table class="table table-sm table-bordered">
+  <thead class="thead-light text-center">
+    <tr>
+      <th class="text-left">Name</th>
+      <th>Email</th>
+      <th>Sites</th>
+      <th>Admin</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr class="text-center">
+        <td class="text-left"><%= link_to user.name, admin_user_path(user) %></td>
+        <td><%= user.email %></td>
+        <td><%= number_with_delimiter user.sites.count %></td>
+        <td><%= user.admin ? '&#10004;'.html_safe : '' %></td>
+        <td><%= link_to "edit", edit_admin_user_path(user) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center) %>
+  <%= page_entries_info @users %>
+</div>

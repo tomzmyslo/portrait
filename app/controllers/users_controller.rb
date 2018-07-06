@@ -1,41 +1,52 @@
 class UsersController < ApplicationController
-  before_action :user_required
+  before_action :is_logged_in, only: [:new, :create]
+  before_action :authorize, except: [:new, :create]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  # GET /users
-  def index
-    @users = User.by_name
-    @user  = User.new
-  end
-
-  # GET /users/:id
   def show
-    @user = User.find_by! name: params[:id]
+    @sites = @user.sites.succeeded.order(created_at: :desc)
+    @site = Site.new
   end
 
-  # POST /user
+  def new
+    @user = User.new
+  end
+
   def create
-    @user = User.new params.require(:user).permit!
-    @user.save!
-    redirect_to users_url
-  rescue ActiveRecord::RecordInvalid
-    @users = User.by_name
-    render :index
+    @user = User.new(user_params)
+    if @user.save
+      session[:user_id] = @user.id
+      redirect_to root_url
+    else
+      render :new
+    end
   end
 
-  # PUT /users/:id
+  def edit
+  end
+
   def update
-    @user = User.find_by! name: params[:id]
-    @user.update_attributes! params.require(:user).permit!
-    redirect_to @user
-  rescue ActiveRecord::RecordInvalid
-    render :show
+    if @user.update_attributes(user_params)
+      redirect_to current_user_path(@user)
+    else
+      render :edit
+    end
   end
 
-  # DELETE /users/:id
   def destroy
-    @user = User.find_by! name: params[:id]
     @user.destroy
-    redirect_to users_url
+    session[:user_id] = nil
+    redirect_to root_url
+  end
+
+  private
+
+  def set_user
+    @user = current_user
+  end
+
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :username, :password, :password_confirmation)
   end
 
 end
